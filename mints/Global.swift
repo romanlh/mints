@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct post {
+struct Post {
     var title: String
     var description: String
     var user: String
@@ -18,7 +18,9 @@ struct post {
 
 class Global {
     
-    var posts = [post]()
+    var posts = [Post]()
+    
+    var username = ""
     
 }
 

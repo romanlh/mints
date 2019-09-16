@@ -9,12 +9,14 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addSlideMenuButton()
+        checkUserStatus()
         configureFirebase()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
@@ -66,7 +68,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let post_location:String = newLocation?["standort"] as? String ?? "Alle"
             */
             
-            g.posts.append(post(title: post_title, description: post_description, user: post_user, answers: [], date: post_date))
+            g.posts.append(Post(title: post_title, description: post_description, user: post_user, answers: [], date: post_date))
             print("\(g.posts.count) in posts")
             
             DispatchQueue.main.async() {
@@ -82,6 +84,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        g.posts = g.posts.sorted{ $0.dateFromString > $1.dateFromString  }
+        
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "Cell",
             for: indexPath) as! AuteurTableViewCell
@@ -96,7 +101,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    func checkUserStatus(){
+        
+        UserDefaults.standard.string(forKey: "username")
+        
+        if g.username == "" {
+            
+            let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let user = mainStoryboard.instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
+            self.navigationController?.pushViewController(user, animated: true)
+            
+        } else {
+            
+            print("Username gefunden: \(g.username)")
+            
+        }
+        
+    }
 
+}
 
+extension Post{
+    static  let isoFormatter : ISO8601DateFormatter = {
+        let formatter =  ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate,]
+        return formatter
+    }()
+    
+    var dateFromString : Date  {
+        let  iSO8601DateString = date.components(separatedBy: ".").reversed().joined(separator: ".")
+        return  Post.isoFormatter.date(from: iSO8601DateString)!
+    }
 }
 
