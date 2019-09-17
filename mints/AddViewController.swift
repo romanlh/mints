@@ -14,11 +14,9 @@ class AddViewController: BaseViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var desTextView: UITextView!
     
-    var ref: DatabaseReference!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = Database.database().reference()
+
     }
     
     @IBAction func create(_ sender: UIButton) {
@@ -32,7 +30,9 @@ class AddViewController: BaseViewController {
         let title: String = titleTextField.text!
         let des: String = desTextView.text!
         
-        ref.child(titleTextField.text!).setValue(["titel": title, "beschreibung": des, "datum": "\(day).\(month).\(year)", "nutzer": g.username])
+        g.ref.child(titleTextField.text!).setValue(["titel": title, "beschreibung": des, "datum": "\(day).\(month).\(year)", "nutzer": g.username, "show": "true"])
+        
+        print("Post hinzugefügt: \(g.posts.count) Posts")
         
         let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let view = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController

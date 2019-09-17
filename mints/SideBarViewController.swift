@@ -18,11 +18,14 @@ class SideBarViewController: UIViewController {
     var delegate : SlideMenuDelegate?
     
     @IBOutlet weak var btnCloseMenuOverlay: UIButton!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if g.username != "" {
+            usernameLabel.text = "Username: \(g.username)"
+        }
     }
     
     @IBAction func btnClosedTapped(_ sender: UIButton) {

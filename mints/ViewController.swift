@@ -10,11 +10,12 @@ import UIKit
 import Firebase
 
 class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        g.posts.removeAll()
         addSlideMenuButton()
         checkUserStatus()
         configureFirebase()
@@ -24,6 +25,8 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
     }
+    
+    
     
     @objc func addTapped(){
         
@@ -43,7 +46,7 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         
         ref.observe( .childAdded, with: { snapshot in
             
-        ////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////
             
             let date = Date()
             let calendar = Calendar.current
@@ -63,22 +66,27 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
             let newPostUser = snapshot.value as? NSDictionary
             let post_user:String = newPostUser?["nutzer"] as? String ?? "Unbekannter Nutzer"
             
-            /* VIELLEICHT KATEGORIE?
-            let newLocation = snapshot.value as? NSDictionary
-            let post_location:String = newLocation?["standort"] as? String ?? "Alle"
-            */
+            let show = snapshot.value as? NSDictionary
+            let show_status: String = show?["show"] as? String ?? "true"
             
-            g.posts.append(Post(title: post_title, description: post_description, user: post_user, answers: [], date: post_date))
-            print("\(g.posts.count) in posts")
+            /* VIELLEICHT KATEGORIE?
+             let newLocation = snapshot.value as? NSDictionary
+             let post_location:String = newLocation?["standort"] as? String ?? "Alle"
+             */
+            
+            if show_status == "true" {
+                g.posts.append(Post(title: post_title, description: post_description, user: post_user, answers: [], date: post_date))
+                print("\(g.posts.count) in posts")
+            }
             
             DispatchQueue.main.async() {
                 
                 self.tableView.reloadData()
             }
         })
-        print("-- Firebase setup done --")
+        print("-- Firebase setup done (\(g.posts.count) posts found)--")
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return g.posts.count
     }
@@ -101,24 +109,50 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        print(g.posts)
+        
+        
+        
+        if editingStyle == .delete {
+            
+            g.posts.remove(at: indexPath.row)
+            self.tableView.reloadData()
+            
+            print(indexPath.row)
+            print(g.posts)
+        }
+        
+        let alert = UIAlertController(title: "Notiz löschen?", message: "Gelöschte einträge sind nicht wieder herzustellen und sind für alle wirksam", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Löschen", style: .destructive, handler: { (action) in
+            
+            g.ref.child(g.posts[indexPath.row].title).setValue(["titel": g.posts[indexPath.row].title, "beschreibung": g.posts[indexPath.row].description, "datum": g.posts[indexPath.row].date, "nutzer": g.posts[indexPath.row].user, "show": "false"])
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+            
+        }))
+    }
+    
     func checkUserStatus(){
         
-        UserDefaults.standard.string(forKey: "username")
+        g.loadUsername()
         
         if g.username == "" {
-            
             let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let user = mainStoryboard.instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             self.navigationController?.pushViewController(user, animated: true)
-            
-        } else {
-            
-            print("Username gefunden: \(g.username)")
-            
         }
-        
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(g.posts[indexPath.row].title)
+        //self.tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 }
 
 extension Post{

@@ -24,7 +24,7 @@ class UserDetailsViewController: UIViewController {
         
         g.username = usernameTextField.text!
         
-        UserDefaults.standard.setValue(g.username, forKey: "username")
+        g.saveUsername()
         
         let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let view = mainStoryboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
