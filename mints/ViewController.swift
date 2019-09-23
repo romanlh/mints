@@ -13,6 +13,8 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
     
     @IBOutlet weak var tableView: UITableView!
     
+    let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         g.posts.removeAll()
@@ -24,6 +26,8 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
+        
+        navigationItem.title = "Mints"
     }
     
     
@@ -142,15 +146,18 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         g.loadUsername()
         
         if g.username == "" {
-            let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let user = mainStoryboard.instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             self.navigationController?.pushViewController(user, animated: true)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(g.posts[indexPath.row].title)
-        //self.tableView.deselectRow(at: indexPath, animated: true)
+        
+        g.question = g.posts[indexPath.row]
+        
+        let des = mainStoryboard.instantiateViewController(withIdentifier: "DesViewController") as! DesViewController
+        self.navigationController?.pushViewController(des, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

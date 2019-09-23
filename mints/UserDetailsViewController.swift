@@ -11,13 +11,14 @@ import UIKit
 class UserDetailsViewController: UIViewController {
 
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var createButton: UIButton!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        createButton.tintColor = g.detailColor
     }
 
     @IBAction func saveUsername(_ sender: UIButton) {

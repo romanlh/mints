@@ -13,10 +13,11 @@ class AddViewController: BaseViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var desTextView: UITextView!
+    @IBOutlet weak var createButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        createButton.tintColor = g.detailColor
     }
     
     @IBAction func create(_ sender: UIButton) {
