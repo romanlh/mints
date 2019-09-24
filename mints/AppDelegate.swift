@@ -40,7 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        SwiftLoggor.fileContent = "\n \(SwiftLoggor.log(message:"My first log",event:ErroTypes.e))"
+        
+        print(SwiftLoggor.log(message:"ERROR LOG",event:ErroTypes.e))
+            
+        SwiftLoggor.writeToFile(message:SwiftLoggor.fileContent)
     }
 
 

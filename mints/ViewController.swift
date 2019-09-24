@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import os
 
 class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -16,10 +17,21 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
     let mainStoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
     override func viewDidLoad() {
+        
+        os_log("First viewDidLoad", log: Log.table)
+        
+        // TestError
+        
+        let testError: StaticString = "This is an TEST ERROR!"
+        os_log(testError, log: OSLog.default, type: .error)
+        
+        //
+        
         super.viewDidLoad()
         g.posts.removeAll()
         addSlideMenuButton()
         checkUserStatus()
+        
         configureFirebase()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
@@ -28,6 +40,8 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         tableView.estimatedRowHeight = 600
         
         navigationItem.title = "Mints"
+        
+        printLog()
     }
     
     
@@ -80,15 +94,15 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
             
             if show_status == "true" {
                 g.posts.append(Post(title: post_title, description: post_description, user: post_user, answers: [], date: post_date))
-                print("\(g.posts.count) in posts")
+                os_log("%d inputs in Firebase", log: Log.user, type: .default, g.posts.count)
             }
             
             DispatchQueue.main.async() {
                 
                 self.tableView.reloadData()
+                
             }
         })
-        print("-- Firebase setup done (\(g.posts.count) posts found)--")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -144,8 +158,10 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
     func checkUserStatus(){
         
         g.loadUsername()
-        
+
         if g.username == "" {
+            os_log("No username found (new user?!)",
+                   log: Log.user, type: .error)
             let user = mainStoryboard.instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
             self.navigationController?.pushViewController(user, animated: true)
         }
@@ -160,6 +176,13 @@ class ViewController: BaseViewController, UITableViewDelegate, UITableViewDataSo
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func printLog(){
+        SwiftLoggor.fileContent = "\n \(SwiftLoggor.log(message:"My first log",event:ErroTypes.e))"
+        
+        print(SwiftLoggor.log(message:"Main Log",event:ErroTypes.e))
+        
+        SwiftLoggor.writeToFile(message:SwiftLoggor.fileContent)
+    }
 }
 
 extension Post{
@@ -173,5 +196,6 @@ extension Post{
         let  iSO8601DateString = date.components(separatedBy: ".").reversed().joined(separator: ".")
         return  Post.isoFormatter.date(from: iSO8601DateString)!
     }
+    
 }
 

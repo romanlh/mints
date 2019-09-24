@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E8790E32338E6EC000D6779 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8790E22338E6EC000D6779 /* Log.swift */; };
+		9E8790E52338EDFD000D6779 /* SwiftLoggor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8790E42338EDFD000D6779 /* SwiftLoggor.swift */; };
 		9E9F0DE7232CDD9700EB6B12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F0DE6232CDD9700EB6B12 /* AppDelegate.swift */; };
 		9E9F0DE9232CDD9700EB6B12 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F0DE8232CDD9700EB6B12 /* ViewController.swift */; };
 		9E9F0DEC232CDD9700EB6B12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E9F0DEA232CDD9700EB6B12 /* Main.storyboard */; };
@@ -39,6 +41,8 @@
 		046701705B1EAD1C72627AC2 /* Pods_mints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BA585C6069B694CA11471DD /* Pods-mints.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mints.release.xcconfig"; path = "Pods/Target Support Files/Pods-mints/Pods-mints.release.xcconfig"; sourceTree = "<group>"; };
 		8629AD69326C9F1DDB2D005A /* Pods-mints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mints.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mints/Pods-mints.debug.xcconfig"; sourceTree = "<group>"; };
+		9E8790E22338E6EC000D6779 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		9E8790E42338EDFD000D6779 /* SwiftLoggor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftLoggor.swift; sourceTree = "<group>"; };
 		9E9F0DE3232CDD9700EB6B12 /* mints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E9F0DE6232CDD9700EB6B12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E9F0DE8232CDD9700EB6B12 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,11 +124,13 @@
 				9E9F0E06232CF86100EB6B12 /* UserDetailsViewController.swift */,
 				9E9F0DFC232CDFC200EB6B12 /* Global.swift */,
 				9E9F0E00232CE26100EB6B12 /* AuteurTableViewCell.swift */,
+				9E8790E22338E6EC000D6779 /* Log.swift */,
 				9E9F0DEA232CDD9700EB6B12 /* Main.storyboard */,
 				9E9F0DED232CDD9900EB6B12 /* Assets.xcassets */,
 				9E9F0DEF232CDD9900EB6B12 /* LaunchScreen.storyboard */,
 				9E9F0DF2232CDD9900EB6B12 /* Info.plist */,
 				9E9F0DFA232CDE3800EB6B12 /* GoogleService-Info.plist */,
+				9E8790E42338EDFD000D6779 /* SwiftLoggor.swift */,
 			);
 			path = mints;
 			sourceTree = "<group>";
@@ -298,10 +304,12 @@
 			files = (
 				9E9F0E1B2330BDB700EB6B12 /* DesViewController.swift in Sources */,
 				9E9F0E03232CE73A00EB6B12 /* AddViewController.swift in Sources */,
+				9E8790E32338E6EC000D6779 /* Log.swift in Sources */,
 				9E9F0DE9232CDD9700EB6B12 /* ViewController.swift in Sources */,
 				9E9F0E07232CF86100EB6B12 /* UserDetailsViewController.swift in Sources */,
 				9E9F0E01232CE26100EB6B12 /* AuteurTableViewCell.swift in Sources */,
 				9E9F0DE7232CDD9700EB6B12 /* AppDelegate.swift in Sources */,
+				9E8790E52338EDFD000D6779 /* SwiftLoggor.swift in Sources */,
 				9E9F0E09232F3BA800EB6B12 /* BaseViewController.swift in Sources */,
 				9E9F0E1D233123CE00EB6B12 /* AnViewController.swift in Sources */,
 				9E9F0DFD232CDFC200EB6B12 /* Global.swift in Sources */,

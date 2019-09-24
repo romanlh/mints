@@ -1,0 +1,6 @@
+framework module Pods_mints {
+  umbrella header "Pods-mints-umbrella.h"
+
+  export *
+  module * { export * }
+}

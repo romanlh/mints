@@ -18,6 +18,7 @@ class AddViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createButton.tintColor = g.detailColor
+        navigationItem.title = "Frage erstellen"
     }
     
     @IBAction func create(_ sender: UIButton) {
